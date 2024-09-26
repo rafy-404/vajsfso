@@ -62,7 +62,7 @@ THANKS FOR ADDING『🫰🤖』`, attachment: fs.createReadStream(__dirname + "/
       let { threadName, participantIDs } = await api.getThreadInfo(threadID);
 
       const threadData = global.data.threadData.get(parseInt(threadID)) || {};
-      const path = join(__dirname, "rakib", "font");
+      const path = join(__dirname, "RAKIB", "font");
       const pathGif = join(path, `${threadID}.gif`);
 
       var mentions = [], nameArray = [], memLength = [], i = 0;
@@ -84,11 +84,11 @@ THANKS FOR ADDING『🫰🤖』`, attachment: fs.createReadStream(__dirname + "/
 
       if (existsSync(path)) mkdirSync(path, { recursive: true });
 
-      const randomPath = readdirSync(join(__dirname, "rakib", "font"));
+      const randomPath = readdirSync(join(__dirname, "RAKIB", "font"));
 
       if (existsSync(pathGif)) formPush = { body: msg, attachment: createReadStream(pathGif), mentions }
       else if (randomPath.length != 0) {
-        const pathRandom = join(__dirname, "rakib", "font", `${randomPath[Math.floor(Math.random() * randomPath.length)]}`);
+        const pathRandom = join(__dirname, "RAKIB", "font", `${randomPath[Math.floor(Math.random() * randomPath.length)]}`);
         formPush = { body: msg, attachment: createReadStream(pathRandom), mentions }
       }
       else formPush = { body: msg, mentions }
