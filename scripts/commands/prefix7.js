@@ -27,7 +27,7 @@ module.exports.handleEvent = async ({ api, event }) => {
     var time = moment.tz("Asia/Dhaka").format("LLLL");
   const text = `╔══≪❈𝐏𝐫𝐞𝐟𝐢𝐱 𝐄𝐯𝐞𝐧𝐭❈≫══╗\n║𝐑𝐎𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 ➠ ｢ ${global.config.PREFIX} ｣  ║\n║𝐑𝐎𝐁𝐎𝐓 𝐂𝐌𝐃➢ ｢ ${client.commands.size} ｣   ║\n╚══≪❈ 𝐑𝐚𝐤𝐢𝐛-𝐁𝐨𝐭 ❈≫══╝\n𝐂𝐫𝐞𝐚𝐭𝐨𝐫\n➥𝚁𝙰𝙺𝙸𝙱 𝙲𝙷𝙾𝚆𝙳𝙷𝚄𝚁𝚄`
   //const text2 = text[Math.floor(Math.random() * text.length)];
-const imgur = ["https://i.imgur.com/eQ3zllm.jpeg","https://i.imgur.com/cLKLwSY.jpeg"]
+const imgur = ["https://i.imgur.com/REQoisC.png"]
   const link = imgur[Math.floor(Math.random() * imgur.length)];
   const res = await dipto.get(link, { responseType: 'arraybuffer' })
 const ex = path.extname(link);
