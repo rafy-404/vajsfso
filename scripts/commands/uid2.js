@@ -3,7 +3,7 @@ module.exports.config = {
 	version: "1.0.0",
 	permission: 0,
 	credits: "ryuko",
-	prefix: false,
+	prefix: 'awto',
 	description: "get user id.",
 	category: "without prefix",
 	cooldowns: 5
