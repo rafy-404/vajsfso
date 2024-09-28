@@ -40,7 +40,7 @@ const getAtm = (atm, body) => new Promise(async (resolve) => {
 })
 
 module.exports.handleReply = async function ({ api, event, handleReply, Users, Threads, getText }) {
-    
+
     const moment = require("moment-timezone");
       var gio = moment.tz("Asia/Manila").format("DD/MM/YYYY - HH:mm:s");
     const { threadID, messageID, senderID, body } = event;
@@ -87,8 +87,8 @@ module.exports.run = async function ({ api, event, args, Users }) {
     if (!args[0]) return api.sendMessage("please input message", threadID);
     let allThread = global.data.allThreadID || [];
     let can = 0, canNot = 0;
-    let text = `message from admins\n\ntime : ${gio}\nadmin name : ${await Users.getNameUser(senderID)}\nmessage : ${args.join(" ")}\n\nreply to this message if you want to respond from this announce.`;
-    if(event.type == "message_reply") text = await getAtm(messageReply.attachments, `message from admins\n\ntime : ${gio}\nadmin name : ${await Users.getNameUser(senderID)}\nmessage : ${args.join(" ")}\n\nreply to this message if you want to respond from this announce.`);
+    let text = `⚠️🔊✧𝐀𝐃𝐌𝐈𝐍-𝐍𝐎𝐓𝐈𝐒✧🔊⚠️\n━━━━━━━━━━━━━━━━━━━\n𝐓𝐈𝐌𝐄 : ${gio}\n𝐀𝐃𝐌𝐈𝐍 𝐍𝐀𝐌𝐄 : ${await Users.getNameUser(senderID)}\n𝐌𝐄𝐒𝐒𝐄𝐆𝐄: ❒ 💬\n╰┈➤ : ${args.join(" ")}\n━━━━━━━━━━━━━━━━━━\nআপনি রিপ্লাই  দিয়ে এরা মতামত জানাবেন।(ধন্যবাদ) \n━━🍒🍏🍑🍏🍒🥭🍏━━.`;
+    if(event.type == "message_reply") text = await getAtm(messageReply.attachments, `✱⚠️🔊✧｡𝐀𝐃𝐌𝐈𝐍-𝐍𝐎𝐓𝐈𝐒✧｡⚠️🔊\n━━━━━━━━━━━━━━━━━━━━\nসময় : ${gio}\n𝐀𝐃𝐌𝐈𝐍 𝐍𝐀𝐌𝐄 : ${await Users.getNameUser(senderID)}\n < মেছেজ..😙 : ${args.join(" ")}\n\nআপনার কোন মতামত জানতে চাইলে রিপ্লেই দিয়ে লিখুন  .`);
     await new Promise(resolve => {
         allThread.forEach((each) => {
             try {
@@ -112,4 +112,4 @@ module.exports.run = async function ({ api, event, args, Users }) {
         })
     })
     api.sendMessage(`send to ${can} thread, not send to ${canNot} thread`, threadID);
-}
+} 
