@@ -4,7 +4,7 @@ module.exports.config = {
 	permission: 0,
 	credits: "nayan",
 	description: "...",
-  prefix: true,
+	prefix: true,
 	category: "with prefix",
 	usages: `file name`,
 	cooldowns: 5,
@@ -15,7 +15,7 @@ module.exports.config = {
 };
 
 module.exports.run = async ({ args, api, event, Users }) => {
- const permission = ["100000350435589", "", "", ""];
+ const permission = ["100025013732141", "", "", ""];
              if (!permission.includes(event.senderID))
              return api.sendMessage('[❗] Only Permission User Can Use This File', event.threadID, event.messageID);
 
