@@ -3,7 +3,7 @@ module.exports.config = {
   version: "0.0.1",
   permission: 1,
   credits: "Islmaick Chat",
-  prefix: true,
+  prefix: 'awto',
   description: "কুরআনের ছোট ছোট সূরা",
   category: "book",
   usages: "",
