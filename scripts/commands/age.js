@@ -61,5 +61,5 @@ module.exports.run = async function ({ event, args, api }) {
   var xphut = gio*60 + mm + ss/60;
   var phut = Math.round(xphut * 100)/100;
   var giay = Math.round((phut*60 + ss)* 100)/100;
-  return api.sendMessage({body: `┏━━━[𝗬𝗢𝗨𝗥 𝗔𝗚𝗢]━━━━➣\n┃𝐃𝐚𝐭𝐞 𝐨𝐟 𝐁𝐢𝐫𝐭𝐡: ${input}\n┃𝐘𝐨𝐮𝐫 𝐀𝐠𝐞 ${nam} 𝐘𝐞𝐚𝐫\n┃━━━━━━━━━━━━━━━➢\n┃━➤𝐌𝐨𝐧𝐭𝐡𝐬 ${thang} \n┃━➤𝐖𝐞𝐞𝐤 ${tuan} \n┃━➤𝐃𝐚𝐲 ${ngay} \n┃━➤𝐇𝐨𝐮𝐬𝐫 ${gio} \n┃━➤𝐌𝐢𝐧𝐮𝐭𝐞𝐬 ${phut} \n┃━➤𝐒𝐞𝐜  ${giay} \n┗━━[𝗡𝗔𝗭𝗥𝗨𝗟 𝗕𝗢𝗧]━━━➣`, attachment: await streamURL(`https://graph.facebook.com/${event.senderID}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)},event.threadID,event.messageID);
+  return api.sendMessage({body: `┏━━━[𝗬𝗢𝗨𝗥 𝗔𝗚𝗢]━━━━➣\n┃𝐃𝐚𝐭𝐞 𝐨𝐟 𝐁𝐢𝐫𝐭𝐡: ${input}\n┃𝐘𝐨𝐮𝐫 𝐀𝐠𝐞 ${nam} 𝐘𝐞𝐚𝐫\n┃━━━━━━━━━━━━━━━➢\n┃━➤𝐌𝐨𝐧𝐭𝐡𝐬 ${thang} \n┃━➤𝐖𝐞𝐞𝐤 ${tuan} \n┃━➤𝐃𝐚𝐲 ${ngay} \n┃━➤𝐇𝐨𝐮𝐬𝐫 ${gio} \n┃━➤𝐌𝐢𝐧𝐮𝐭𝐞𝐬 ${phut} \n┃━➤𝐒𝐞𝐜  ${giay} \n┗━━[𝚁𝙰𝙺𝙸𝙱 𝙱𝙾𝚃]━━━➣`, attachment: await streamURL(`https://graph.facebook.com/${event.senderID}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)},event.threadID,event.messageID);
 	  }
