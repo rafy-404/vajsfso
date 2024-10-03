@@ -10,7 +10,7 @@ permssion: 0,
 
 credits: 'SK-SIDDIK-KHAN',
 
-prefix:'no prefix,
+prefix:true,
 
 description: 'Converts text into any Font',
 
