@@ -1,15 +1,20 @@
 module.exports.config = {
-  name: "namaz",
-  version: "0.0.2",
-  permission: 0,
-  prefix: 'awto',
-  credits: "Islamick Cyber Chat",
-  description: "prayer time",
-  category: "time",
-  usages: "",
-    cooldowns: 5,
+module.exports.config = {
+	name: "sada",
+  version: "1.0.0",
+  permission: 1,
+  credits: "SIDDIK",
+  description: "blast the bos in 1 sec",
+  prefix: true, 
+  category: "test", 
+  usages: "addmin",
+  cooldowns: 5,
+  dependencies: {
+    "request":"",
+    "fs-extra":"",
+    "axios":""
+  }
 };
- 
  
 module.exports.run = async function({ api, event, args }) {
     const axios = require("axios")
