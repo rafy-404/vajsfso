@@ -1,12 +1,12 @@
 module.exports.config = {
-  name: "translate",
+  name: "translate1",
   version: "1.0.1",
   permission: 0,
-  credits: "ryuko",
+  credits: "Rakib ",
   description: "text translation",
   prefix: false,
   category: "without prefix",
-  usages: `translate fr hello, how are you?`,
+  usages: "[en/ko/ja/vi] [Text]",
   cooldowns: 5,
   dependencies: {
     "request": ""
