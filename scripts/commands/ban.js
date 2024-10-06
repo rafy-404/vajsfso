@@ -6,7 +6,7 @@ module.exports.config = {
   prefix: false,
   description: "Text translation",
   category: "media",
-  usages: "[en/ko/ja/vi] [Text]",
+  usages: "[en/ko/bn/ja/vi] [Text]",
   cooldowns: 5,
   dependencies: {
     "request":  ""
