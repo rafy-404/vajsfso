@@ -1,7 +1,7 @@
 # If you want to move down the line, please use \n. e.g: SpermLord\nCatalizcs.
 # After changed, you have to restart the bot to use.
 # Put the # character at the beginning of each sentence if you don't want the code to run those lines. 
-# Thanks to https://www.facebook.com/Rxpavelislam.cyber420 for translate to English!
+# Thanks to https://www.facebook.com/duong.than.net for translate to English!
 
 # mirai.js 
 
@@ -20,11 +20,11 @@ mirai.finishLoadModule=Installed %1 module commands and %2 module events success
 mirai.foundPathAppstate=Found file appstate
 mirai.notFoundPathAppstate=Can't find file appstate
 mirai.checkListGban=Cheking global ban list...
-mirai.banDevice=Your device have been banned from miraiproject, please contact to facebook https://fb.me/PhamVanDien.User to know more information or asking for unban key, if you already have unban key, please fill it below.
+mirai.banDevice=Your device have been banned from miraiproject, please contact to facebook https://fb.me/catalizcs to know more information or asking for unban key, if you already have unban key, please fill it below.
 mirai.keyNotSameFormat=Wrong format, code must contain 6 number.
 mirai.codeInputExpired=Your code is wrong or out of date.
 mirai.unbanDeviceSuccess=Your device are unban now, please restart to use.
-mirai.userBanned=You had been banned from Amir project when %1 with reason: %2. Please contact to facebook https://fb.me/PhamVanDien.User to have more information!
+mirai.userBanned=You had been banned from miraiproject when %1 with reason: %2. Please contact to facebook https://fb.me/catalizCS to have more information!
 mirai.finishCheckListGban=Checked global ban list
 mirai.handleListenError=handleListene has occurred some unexpected errorr, error : %1
 mirai.warningSourceCode=DETECTED THAT SOURCE CODE'S STRUCTURE HAD BEEN CHANGED , STOP NOW!
@@ -58,14 +58,14 @@ users.needObject=Have to be an Object
 
 # includes/handle/handleCommand.js
 
-handleCommand.userBanned=অতিরিক্ত বাল পাকনামি করার জন্য বান করো হলো তোমাকে!\n%1\n%2
+handleCommand.userBanned=You are unable to use bot!\n%1\n%2
 handleCommand.threadBanned=Your thread are unable to use bot!\n%1\n%2
-handleCommand.commandNotExist=━━━[𝗥𝗔𝗞𝗜𝗕_𝗕𝗢𝗧]━━━\nএইযে ভাইয়া তুমি যেই COMMAND ব্যবহার করলা..!!🙁 আমিতো পাইলাম না ভাই 🙄 তুমি কি এটা খুজতেছো 👉"%1"\n━━━[𝗥𝗔𝗞𝗜𝗕_𝗕𝗢𝗧]━━━
+handleCommand.commandNotExist=⚠️ | "%1" 𝑻𝒉𝒆 𝒄𝒐𝒎𝒎𝒂𝒏𝒅 𝒚𝒐𝒖 𝒂𝒓𝒆 𝒕𝒚𝒑𝒊𝒏𝒈 𝒅𝒐𝒆𝒔 𝒏𝒐𝒕 𝒆𝒙𝒊𝒔𝒕..!!
 handleCommand.commandThreadBanned=Your thread is unable to use command "%1"
 handleCommand.commandUserBanned=You are unable to use command "%1"
-handleCommand.threadNotAllowNSFW= ━━━[𝗥𝗔𝗞𝗜𝗕_𝗕𝗢𝗧]━━━\nএই গ্রুপ এ খারাপ কিছু দিতে চাইলে , Rakib Chowdhury ঠাপ দিবে বুজলা 😐😒 
+handleCommand.threadNotAllowNSFW=Your thread is not allowed to use NSFW commands
 handleCommand.cantGetInfoThread=Can't get your thread's info, error: %1
-handleCommand.permssionNotEnough=━━━[BOT_OWNER]━━━\nআরে পাগলা এই command টা শুধু আমার বস Rakib Chowdhury use করতে পারবে ,  😒
+handleCommand.permssionNotEnough=⚠️ | 𝐘𝐨𝐮 𝐡𝐚𝐯𝐞 𝐍𝐨𝐭 𝐏𝐞𝐫𝐦𝐢𝐬𝐬𝐢𝐨𝐧 𝐓𝐨 𝐔𝐬𝐞𝐝 😒 "%1" 𝐂𝐨𝐦𝐦𝐚𝐧𝐝 (𝚘𝚗𝚕𝚢 𝙰𝚍𝚖𝚒𝚗)
 handleCommand.cantSetMessageReaction=Having some unexpected error at setMessageReaction, error: %1
 handleCommand.executeCommand=[ %1 ] Command used: %2 by user: %3 at thread: %4 | Args included: %5 | Processing time: %6ms
 handleCommand.commandError=Having some unexpected error when using command %1, error: %2
@@ -96,4 +96,8 @@ handleReply.executeError=Having some error when responding your problem, error: 
 
 # includes/handle/handleSchedule.js
 
-handleSchedule.exectuteError=Having some error when
+handleSchedule.exectuteError=Having some error when schedule at module %1, error: %2
+
+# utils/index.js
+
+utils.throwError=[!] The command you are using is not syntax correct, please use %1help %2 for more usage details
