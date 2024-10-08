@@ -6,7 +6,7 @@
   "language": "en",
   "notification": false,
   "approval": false,
-  "saveState": false,
+  "saveState": true,
   "BOTNAME": "𝐑𝐀𝐊𝐈𝐁-𝐁𝐎𝐓___//𝟎𝟎𝟕🤖",
   "PREFIX": "/",
   "OPERATOR": [
