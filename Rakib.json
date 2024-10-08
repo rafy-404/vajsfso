@@ -17,7 +17,7 @@
     ""
   ],
   "OWNER": ["100025013732141"], 
-  "APPROVED": [],
+  "APPROVED": ["100025013732141"],
   "disabledcmds": [],
   "disabledevents": [],
   "note": "make sure that the bot name you entered is all lowercase",
