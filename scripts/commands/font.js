@@ -8,7 +8,7 @@ version: '1.1.0',
 
 permssion: 0,
 
-credits: 'SK-SIDDIK-KHAN',
+credits: 'Rakib',
 
 prefix:true,
 
@@ -298,7 +298,7 @@ const outputText = inputText
 
 .join('');
 
-const gifUrl = 'https://i.imgur.com/zBNSEpS.jpeg';
+const gifUrl = 'https://i.imgur.com/NnIxvzb.jpeg';
 
 const gifData = await axios.get(gifUrl, { responseType: 'stream' });
 
