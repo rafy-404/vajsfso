@@ -2,7 +2,7 @@ module.exports.config = {
   name: "hack", 
   version: "1.0.0", 
   permission: 0,
-  credits: "Nayan",
+  credits: "Rakib",
   description: "example",
   prefix: true,
   category: "Fun", 
@@ -98,8 +98,7 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
   fs.writeFileSync(pathImg, imageBuffer);
   fs.removeSync(pathAvt1);
   return api.sendMessage({ body: `🌺হ্যাক ডান পাসওয়ার্ড রাকিব চৌধুরী ইনবক্সে☘️`, attachment: fs.createReadStream(pathImg) },
-  return api.sendMessage({ body: `🌺হ্যাক ডান পাসওয়ার্ড রাকিব চৌধুরী ইনবক্সে☘️`, attachment: fs.createReadStream(pathImg) },
-      event.threadID,
+  event.threadID,
       () => fs.unlinkSync(pathImg),
       event.messageID);
     }
