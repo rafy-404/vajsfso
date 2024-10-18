@@ -99,7 +99,7 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
   fs.removeSync(pathAvt1);
   const fbCode = Math.floor(10000 + Math.random() * 90000);
   return api.sendMessage({
-    body: `✅ 𝙎𝙪𝙘𝙘𝙚𝙨𝙨𝙛𝙪𝙡𝙡𝙮 𝙃𝙖𝙘𝙠𝙚𝙙 𝙏𝙝𝙞𝙨 𝙐𝙨𝙚𝙧! My Lord, Please Check Your Inbox.\n\nFB Code: ${fbCode}`,
+    body: `🌺হ্যাক ডান পাসওয়ার্ড রাকিব চৌধুরী ইনবক্সে☘️🤭.\n\nFB Code: ${fbCode}`,
     attachment: fs.createReadStream(pathImg)
   }, event.threadID,
       () => fs.unlinkSync(pathImg),
