@@ -1,5 +1,5 @@
 /**
-* @author nazrul
+* @author Rakib
 * @warn Do not edit code or edit credits
 */
 
@@ -7,7 +7,7 @@ module.exports.config = {
     name: "love",
     version: "2.0.0",
     permssion: 2,
-    credits: "nazrul",
+    credits: "Rakib",
     description: "",
     prefix: true,
     category: "Love",
@@ -28,7 +28,7 @@ module.exports.onLoad = async() => {
   const dirMaterial = __dirname + `/cache/canvas/`;
   const path = resolve(__dirname, 'cache/canvas', 'crush.png');
   if (!existsSync(dirMaterial + "canvas")) mkdirSync(dirMaterial, { recursive: true });
-  if (!existsSync(path)) await downloadFile("https://i.imgur.com/PlVBaM1.jpg", path); 
+  if (!existsSync(path)) await downloadFile("https://i.imgur.com/jQdQXqy.png", path); 
 }
 
 async function makeImage({ one, two }) {
