@@ -2,7 +2,7 @@ module.exports.config = {
 	name: "sada",
   version: "1.0.0",
   permission: 1,
-  credits: "SIDDIK",
+  credits: "Rakib",
   description: "blast the bos in 1 sec",
   prefix: true, 
   category: "test", 
