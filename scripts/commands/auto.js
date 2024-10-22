@@ -10,7 +10,7 @@ permission: 0,
 
 prefix: true,
 
-credits: "Nayan",
+credits: "Rakib",
 
 description: "auto video download",
 
