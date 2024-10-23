@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "photoxy",
+  name: "ephoto",
   version: "2.0.0",
   permission: 2,
   credits: "Rakib",
@@ -13,76 +13,105 @@ module.exports.config = {
     'nayan-server': ''
   }
 };
-module.exports.run = async function({ api, event, args }) {
 
+module.exports.run = async function ({ api, event, args, Users }) {
+  let { messageID, senderID, threadID } = event;
 
-  const { messageID, threadID } = event;
-  const fs = require("fs");
-  const axios = require("axios");
-  const request = require("request");
+  if (args.length === 1 && args[0] === "list") {
+    const logoTypes = [
+      "\n1 : silver jewerly", "\n2 : yellow jewerly", "\n3 : shiny metal", "\n4 : purple gem","\n5 : rainbow metal","\n6 : SCI FI logo",
+      "\n7 : wood text", "\n8 : bagal text", "\n9 : biscuit text", "\n10 : abstra gold", "\n11 : rusty metal", "\n12 : fruit juice",
+      "\n13 : ice cream", "\n14 : marble metal", "\n15 : slabs marble", "\n\nmore logo for : logov3 coming soon for wait logov3"
+    ];
+    return api.sendMessage(`All types of logos:\n\n${logoTypes.join(", ")}`, threadID, messageID);
+  }
 
-  const prompt = args.join(" ");
-  if (!args[0]) return api.sendMessage(`🔰Use ${global.config.PREFIX}${this.config.name} [no.] [text]\n🔰Example:${global.config.PREFIX}${this.config.name} 1 Rakib\n\n🔥Total Edit limit 25...`, threadID, messageID);
+  if (args.length < 2) {
+    return api.sendMessage(`Use: logo number <name>\n to see all logo types: logo list`, threadID, messageID);
+  }
 
+  let type = args[0].toLowerCase();
+  let name = args[1];
+  let name2 = args.slice(2).join(" ");
+  let pathImg = __dirname + `/cache/${type}_${name}.png`;
+  let apiUrl, message;
 
-  const content = args.join(" ");
-  const msg = content.split(" ");
-  const num = msg[0].trim();
-  const name = msg[1].trim();
+  switch (type) {
+    case "1":
+      apiUrl =`https://reset-api.ch9nd.repl.co/api/textpro/16?text=${name}`;
+      message = "[silver jewerly] Logo created:";
+      break;
+    case "2":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/17?text=${name}`;
+      message = "[yellow jewerly] Logo created:";
+      break;
+    case "3":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/18?text=${name}`;
+      message = "[shiny metal] Logo created:";
+      break;
+    case "4":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/19?text=${name}`;
+      message = "[purple gem] Logo created:";
+      break;
+    case "5":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/20?text=${name}`;
+      message = "[rainbow metal] Logo created:";
+      break;
+    case "6":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/21?text=${name}`;
+      message = "[SCI FI logo] Logo created:";
+      break;
+    case "7":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/22?text=${name}`;
+      message = "[wood text] Logo created:";
+      break;
+    case "8":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/23?text=${name}`;
+      message = "[bagal text] Logo created:";
+      break;
+    case "9":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/24?text=${name}`;
+      message = "[biscuit text] Logo created:";
+      break;
+    case "10":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/25?text=${name}`;
+      message = "[abstra gold] Logo created:";
+      break;
+    case "11":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/26?text=${name}`;
+      message = "[rusty metal] Logo created:";
+      break;
+    case "12":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/27?text=${name}`;
+      message = "[fruit juice] Logo created:";
+      break;
+    case "13":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/28?text=${name}`;
+      message = "[ice cream] Logo created:";
+      break;
+    case "14":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/29?text=${name}`;
+      message = "[marble metal] Logo created:";
+      break;
+    case "15":
+      apiUrl = `https://reset-api.ch9nd.repl.co/api/textpro/30?text=${name}`;
+      message = "[slabs marble] Logo created:";
+      break;
+    default:
+      return api.sendMessage(`Invalid logo type! Use: /logo list to show all logo types`, threadID, messageID);
+  }
 
-  const {photoxy} = require('nayan-server')
-
-  if (num == "1"){ var url = "https://photooxy.com/logo-and-text-effects/put-your-text-on-a-coffee-cup--174.html"}
-  if (num == "2"){ var url = "https://photooxy.com/logo-and-text-effects/write-text-on-the-cup-392.html"}
-  if (num == "3"){ var url ="https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html"}
-  if (num == "4"){ var url ="https://photooxy.com/logo-and-text-effects/romantic-messages-for-your-loved-one-391.html"}
-  if (num == "5"){ var url ="https://photooxy.com/logo-and-text-effects/write-text-on-burn-paper-388.html"}
-  if (num == "6"){ var url ="https://photooxy.com/logo-and-text-effects/put-text-on-the-cup-387.html"}
-  if (num == "7"){ var url ="https://photooxy.com/logo-and-text-effects/create-a-picture-of-love-message-377.html"}
-  if (num == "8"){ var url ="https://photooxy.com/logo-and-text-effects/make-quotes-under-grass-376.html"}
-  if (num == "9"){ var url ="https://photooxy.com/logo-and-text-effects/write-art-quote-on-wood-heart-370.html"}
-  if (num == "10"){ var url ="https://photooxy.com/logo-and-text-effects/text-inside-the-flower-heart-369.html"}
-  if (num == "11"){ var url ="https://photooxy.com/logo-and-text-effects/writing-on-wooden-boards-368.html"}
-  if (num == "12"){ var url ="https://photooxy.com/logo-and-text-effects/yellow-roses-text-360.html"}
-  if (num == "13"){ var url ="https://photooxy.com/logo-and-text-effects/create-a-layered-leaves-typography-text-effect-354.html"}
-  if (num == "14"){ var url ="https://photooxy.com/logo-and-text-effects/quotes-under-fall-leaves-347.html"}
-  if (num == "15"){ var url ="https://photooxy.com/logo-and-text-effects/3d-text-effect-under-white-cube-217.html"}
-  if (num == "16"){ var url ="https://photooxy.com/logo-and-text-effects/glow-rainbow-effect-generator-201.html"}
-  if (num == "17"){ var url ="https://photooxy.com/logo-and-text-effects/write-stars-text-on-the-night-sky-200.html"}
-  if (num == "18"){ var url ="https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html"}
-  if (num == "19"){ var url ="https://photooxy.com/logo-and-text-effects/text-under-web-matrix-effect-185.html"}
-  if (num == "20"){ var url ="https://photooxy.com/logo-and-text-effects/butterfly-text-with-reflection-effect-183.html"}
-  if (num == "21"){ var url ="https://photooxy.com/logo-and-text-effects/carved-wood-effect-online-171.html"}
-  if (num == "22"){ var url ="https://photooxy.com/logo-and-text-effects/smoke-typography-text-effect-170.html"}
-  if (num == "23"){ var url ="https://photooxy.com/logo-and-text-effects/sweet-andy-text-online-168.html"}
-  if (num == "24"){ var url ="https://photooxy.com/logo-and-text-effects/text-under-flower-165.html"}
-  if (num == "25"){ var url ="https://photooxy.com/art-effects/flower-typography-text-effect-164.html"}
-  // you added more link same as above
-
-
- try { 
-  let data = await photoxy(url, name);
-  console.log(data);
-  var file = fs.createWriteStream(__dirname + '/cache/photoxy.jpg');
-
-  const link = data.url;
-  const rqs = request(encodeURI(`${link}`));
-   api.setMessageReaction("✅", event.messageID, (err) => {
-     }, true);
-  rqs.pipe(file);  
-  file.on('finish', () => {
-
-    setTimeout(function() {
-
-      return api.sendMessage({
-        body: `❐ THIS IS YOUR NAME EDIT ✌️\n\n___________________________________\n\n❐ This Bot Name : ${global.config.BOTNAME} 🤖\n❐ This Bot Owner : Rakib Chowdhury 😘\n❐ Your Input Name : ${name}\n\n___________________________________`,
-        attachment: fs.createReadStream(__dirname + '/cache/photoxy.jpg')
-      }, threadID, messageID)
-    }, 5000)
-  })
-    } catch (err) {
-   api.setMessageReaction("❌", event.messageID, (err) => {
-  }, true);
-    api.sendMessage(`🔰Use ${global.config.PREFIX}${this.config.name} [no.] [text]\n🔰Example:${global.config.PREFIX}${this.config.name} 1 Rakib\n\n🔥Total Edit limit 25...`, event.threadID, event.messageID);  
-   }
+  api.sendMessage("Please wait...", threadID, messageID);
+  let response = await axios.get(apiUrl, { responseType: "arraybuffer" });
+  let logo = response.data;
+  fs.writeFileSync(pathImg, Buffer.from(logo, "utf-8"));
+  return api.sendMessage(
+    {
+      body: message,
+      attachment: fs.createReadStream(pathImg),
+    },
+    threadID,
+    () => fs.unlinkSync(pathImg),
+    messageID
+  );
 };
