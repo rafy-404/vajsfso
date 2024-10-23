@@ -3,7 +3,7 @@ module.exports.config = {
   version: "0.0.2",
   permission: 0,
   prefix: true,
-  credits: "Nayan",
+  credits: "Rakib",
   description: "sad video",
   category: "admin",
   usages: "",
