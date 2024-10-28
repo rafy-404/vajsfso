@@ -1,5 +1,5 @@
 module.exports.config = {
-    name: "auther",
+    name: "a65",
     eventType: ['message'],
     version: "1.0.0",
     credits: "Nayan",
@@ -7,7 +7,7 @@ module.exports.config = {
 };
 
 module.exports.run = async function({ api, event }) {
-    const triggerEmoji = "✅"; // এই ইমোজি দিয়ে বার্তা শুরু হলে তা রিমুভ হবে
+    const triggerEmoji = "⚠️"; // এই ইমোজি দিয়ে বার্তা শুরু হলে তা রিমুভ হবে
 
     if (event.body && event.body.startsWith(triggerEmoji)) {
         // বার্তা রিমুভ করা হবে
