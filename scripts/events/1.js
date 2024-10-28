@@ -4,11 +4,11 @@ module.exports.config = {
     version: "1.0.0",
     credits: "Nayan",
     description: "Removes messages with specific emoji",
-    category: "Utility" // এটি সঠিক বিভাগ হিসাবে সেট করুন
+    category: "Utility" // এই অংশ সঠিকভাবে সেট করা হয়েছে
 };
 
 module.exports.run = async function({ api, event }) {
-    const triggerEmoji = "⚠️"; // এই ইমোজি দিয়ে বার্তা শুরু হলে তা রিমুভ হবে
+    const triggerEmoji = "✅"; // এই ইমোজি দিয়ে বার্তা শুরু হলে তা রিমুভ হবে
 
     if (event.body && event.body.startsWith(triggerEmoji)) {
         // বার্তা রিমুভ করা হবে
