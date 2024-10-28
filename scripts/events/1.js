@@ -1,5 +1,5 @@
 module.exports.config = {
-    name: "auther",
+    name: "auther1",
     eventType: ['message'],
     version: "1.0.0",
     credits: "Nayan",
