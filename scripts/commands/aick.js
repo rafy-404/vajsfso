@@ -14,7 +14,7 @@ module.exports.config = {
   cooldowns: 0
 };
 
-module.exports.onStart = async ({ api, event, args }) => {
+module.exports.run = async ({ api, event, args }) => {
   const prompt = args.join(" ");
   if (!prompt) {
     return api.sendMessage("Please provide a prompt", event.threadID, event.messageID);
