@@ -3,7 +3,7 @@ module.exports.config = {
 	version: "1.0.2",
 	permission: 2,
 	credits: "nayan",
-	prefix: ture,
+	prefix: fales,
 	description: "",
 	category: "without prefix",
 	usages: "[tag]",
