@@ -3,7 +3,7 @@ module.exports.config = {
 	version: "1.0.2",
 	permission: 2,
 	credits: "nayan",
-	prefix: fales,
+	prefix: false,
 	description: "",
 	category: "without prefix",
 	usages: "[tag]",
@@ -11,12 +11,12 @@ module.exports.config = {
 };
 
 module.exports.run = async function({ api, args, Users, event}) {
-		var mention = Object.keys(event.mentions)[0];
-		if(!mention) return api.sendMessage("গালাগালি করা ঠিক না। কিন্তু আমার বসের সাথে বেয়াদবি কোন মাফ নাই বস আপনি শুধু একবার মেনশন দেন। চুদার দায়িত্ব আমার ", event.threadID);
+    var mention = Object.keys(event.mentions)[0];
+    if(!mention) return api.sendMessage("গালাগালি করা ঠিক না। কিন্তু আমার বসের সাথে বেয়াদবি কোন মাফ নাই বস আপনি শুধু একবার মেনশন দেন। চুদার দায়িত্ব আমার কাকে চুদতে চান এমন 1 জনকে @ম্যানশন করতে হবে", event.threadID);
  let name =  event.mentions[mention];
-		var arraytag = [];
-				arraytag.push({id: mention, tag: name});
-		var a = function (a) { api.sendMessage(a, event.threadID); }
+    var arraytag = [];
+        arraytag.push({id: mention, tag: name});
+    var a = function (a) { api.sendMessage(a, event.threadID); }
 a("চুদা লো");
 setTimeout(() => {a({body: "খাংকির পোলা তর মারে চুদি 🥰।" + " " + name, mentions: arraytag})}, 3000);
 setTimeout(() => {a({body: "খাংকির পোলা তর কচি বোন রে চুদি 😍.." + " " + name, mentions: arraytag})}, 5000);
@@ -91,5 +91,5 @@ setTimeout(() => {a("~ আমার পুত। জা ভাগ🤖")} , 39000
 
 
 
-
-	}
+  
+		     }
