@@ -38,8 +38,8 @@ module.exports.run = async function({ api, event, args, Users }) {
     if (!prompt) return api.sendMessage(`${name}\n${rand}`, event.threadID, event.messageID);
 
     try {
-        const response = await axios.get(`http://5.78.114.238:5069/sim?type=ask&ask=${encodeURIComponent(prompt)}`);
-        const result = response.data.data.msg;
+        const response = await axios.get(`http://5.9.12.94:14642/sim?ask=${encodeURIComponent(prompt)}`);
+        const result = response.data.reply;
 
         return api.sendMessage(result, event.threadID, event.messageID);
     } catch (error) {
