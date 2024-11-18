@@ -47,7 +47,7 @@ var callback = () => api.sendMessage({body:` ===== কবরের ডাক ===
  শান্তি যদি পেতে চাও
             আমল আনিও সাথে।।।\=====================
 ✢━━━━━━━━━━━━━━━✢
-----❖----- 𝐍𝐀𝐙𝐑𝐔𝐋 -----❖----
+----❖-----𝚁𝙰𝙺𝙸𝙱 -----❖----
 `,attachment: fs.createReadStream(__dirname + "/cache/juswa.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/juswa.mp4")); 
       return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/juswa.mp4")).on("close",() => callback());
    };
