@@ -1,151 +1,177 @@
-const fs = require("fs-extra");
-const axios = require("axios");
+const fs = require("fs");
 const ytdl = require("ytdl-core");
 const Youtube = require("youtube-search-api");
 
-module.exports = {
-  config: {
-    name: "song",
-    version: "1.0.0",
-    permission: 0,
-    prefix: true,
-    credits: "Nayan & Nazrul",
-    description: "Play and download songs from YouTube.",
-    category: "user",
-    usages: "song <keyword/link>",
-    cooldowns: 5,
-  },
+module.exports.config = {
+  name: "song",
+  version: "1.0.0",
+  permission: 0,
+  credits: "Nazrul",
+  description: "Download and play music from YouTube",
+  prefix: "noprefix",
+  category: "utility",
+  usages: "[searchMusic]",
+  cooldowns: 0,
+};
 
-  convertHMS: function (value) {
-    const sec = parseInt(value, 10);
-    let hours = Math.floor(sec / 3600);
-    let minutes = Math.floor((sec % 3600) / 60);
-    let seconds = sec % 60;
-    return [hours, minutes, seconds]
-      .map((v) => (v < 10 ? "0" + v : v))
-      .filter((v, i) => v !== "00" || i > 0)
-      .join(":");
-  },
-
-  downloadMusicFromYoutube: async function (link, path) {
-    const timestart = Date.now();
-    return new Promise((resolve, reject) => {
-      ytdl(link, { quality: "highestaudio" })
+async function downloadMusicFromYoutube(link, path) {
+  const startTime = Date.now();
+  return new Promise(async (resolve, reject) => {
+    try {
+      ytdl(link, {
+        filter: (format) =>
+          format.quality === "tiny" && format.audioBitrate === 48 && format.hasAudio,
+      })
         .pipe(fs.createWriteStream(path))
         .on("close", async () => {
-          const data = await ytdl.getInfo(link);
+          const info = await ytdl.getInfo(link);
           resolve({
-            title: data.videoDetails.title,
-            duration: Number(data.videoDetails.lengthSeconds),
-            viewCount: data.videoDetails.viewCount,
-            likes: data.videoDetails.likes,
-            author: data.videoDetails.author.name,
-            timestart,
+            title: info.videoDetails.title,
+            duration: Number(info.videoDetails.lengthSeconds),
+            views: info.videoDetails.viewCount,
+            likes: info.videoDetails.likes,
+            channel: info.videoDetails.author.name,
+            processTime: Math.floor((Date.now() - startTime) / 1000),
           });
-        })
-        .on("error", reject);
-    });
-  },
+        });
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
 
-  handleReply: async function ({ api, event, handleReply }) {
+module.exports.handleReply = async function ({ api, event, handleReply }) {
+  try {
+    const path = `${__dirname}/cache/audio.mp3`;
+    const videoId = handleReply.link[event.body - 1];
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    const musicData = await downloadMusicFromYoutube(videoUrl, path);
+
+    if (fs.statSync(path).size > 26214400) {
+      return api.sendMessage(
+        "❌ The file size exceeds 25MB and cannot be sent.",
+        event.threadID,
+        () => fs.unlinkSync(path),
+        event.messageID
+      );
+    }
+
+    api.unsendMessage(handleReply.messageID);
+    api.sendMessage(
+      {
+        body: `🎵 Title: ${musicData.title}\n🎶 Channel: ${musicData.channel}\n⏱️ Duration: ${this.convertHMS(
+          musicData.duration
+        )}\n👀 Views: ${musicData.views}\n👍 Likes: ${musicData.likes}\n⏱️ Process Time: ${musicData.processTime}s`,
+        attachment: fs.createReadStream(path),
+      },
+      event.threadID,
+      () => fs.unlinkSync(path),
+      event.messageID
+    );
+  } catch (err) {
+    console.error(err);
+    api.sendMessage(
+      "❌ An error occurred while processing your request. Please try again later.",
+      event.threadID,
+      event.messageID
+    );
+  }
+};
+
+module.exports.convertHMS = function (value) {
+  const sec = parseInt(value, 10);
+  let hours = Math.floor(sec / 3600);
+  let minutes = Math.floor((sec % 3600) / 60);
+  let seconds = sec % 60;
+  if (hours < 10) hours = "0" + hours;
+  if (minutes < 10) minutes = "0" + minutes;
+  if (seconds < 10) seconds = "0" + seconds;
+  return (hours !== "00" ? hours + ":" : "") + minutes + ":" + seconds;
+};
+
+module.exports.run = async function ({ api, event, args }) {
+  if (!args.length) {
+    return api.sendMessage(
+      "❌ Please provide a YouTube link or search keyword.",
+      event.threadID,
+      event.messageID
+    );
+  }
+
+  const input = args.join(" ");
+  const path = `${__dirname}/cache/audio.mp3`;
+  if (fs.existsSync(path)) fs.unlinkSync(path);
+
+  if (input.startsWith("https://")) {
     try {
-      const choice = parseInt(event.body);
-      if (isNaN(choice) || choice < 1 || choice > handleReply.link.length) {
-        return api.sendMessage("❌ Invalid selection. Please try again.", event.threadID, event.messageID);
-      }
-
-      const videoUrl = `https://www.youtube.com/watch?v=${handleReply.link[choice - 1]}`;
-      const audioPath = `${__dirname}/cache/audio.mp3`;
-      const data = await this.downloadMusicFromYoutube(videoUrl, audioPath);
-
-      if (fs.statSync(audioPath).size > 26214400) {
+      const musicData = await downloadMusicFromYoutube(input, path);
+      if (fs.statSync(path).size > 26214400) {
         return api.sendMessage(
           "❌ File size exceeds 25MB. Cannot send.",
           event.threadID,
-          () => fs.unlinkSync(audioPath),
+          () => fs.unlinkSync(path),
           event.messageID
         );
       }
 
-      const message = `🎵 Title: ${data.title}\n🎶 Channel: ${data.author}\n⏱️ Duration: ${this.convertHMS(data.duration)}\n👀 Views: ${data.viewCount}\n👍 Likes: ${data.likes}\n⏱️ Process Time: ${Math.floor((Date.now() - data.timestart) / 1000)} seconds`;
-      api.unsendMessage(handleReply.messageID);
-      return api.sendMessage(
-        { body: message, attachment: fs.createReadStream(audioPath) },
+      api.sendMessage(
+        {
+          body: `🎵 Title: ${musicData.title}\n🎶 Channel: ${musicData.channel}\n⏱️ Duration: ${this.convertHMS(
+            musicData.duration
+          )}\n👀 Views: ${musicData.views}\n👍 Likes: ${musicData.likes}\n⏱️ Process Time: ${musicData.processTime}s`,
+          attachment: fs.createReadStream(path),
+        },
         event.threadID,
-        () => fs.unlinkSync(audioPath),
+        () => fs.unlinkSync(path),
         event.messageID
       );
     } catch (err) {
       console.error(err);
-      return api.sendMessage("❌ An error occurred.", event.threadID, event.messageID);
+      api.sendMessage(
+        "❌ An error occurred while downloading the music.",
+        event.threadID,
+        event.messageID
+      );
     }
-  },
-
-  run: async function ({ api, event, args }) {
-    if (!args[0]) {
-      return api.sendMessage("❌ Please provide a YouTube link or search keyword.", event.threadID, event.messageID);
-    }
-
-    const query = args.join(" ");
-    const audioPath = `${__dirname}/cache/audio.mp3`;
-    if (fs.existsSync(audioPath)) fs.unlinkSync(audioPath);
-
-    if (query.startsWith("https://")) {
-      try {
-        const data = await this.downloadMusicFromYoutube(query, audioPath);
-        if (fs.statSync(audioPath).size > 26214400) {
-          return api.sendMessage(
-            "❌ File size exceeds 25MB. Cannot send.",
-            event.threadID,
-            () => fs.unlinkSync(audioPath),
-            event.messageID
-          );
-        }
+  } else {
+    try {
+      const results = await Youtube.GetListByKeyword(input, false, 6);
+      if (!results.items.length) {
         return api.sendMessage(
-          {
-            body: `🎵 Title: ${data.title}\n🎶 Channel: ${data.author}\n⏱️ Duration: ${this.convertHMS(data.duration)}\n👀 Views: ${data.viewCount}\n👍 Likes: ${data.likes}`,
-            attachment: fs.createReadStream(audioPath),
-          },
+          "❌ No results found for your query.",
           event.threadID,
-          () => fs.unlinkSync(audioPath),
           event.messageID
         );
-      } catch (err) {
-        console.error(err);
-        return api.sendMessage("❌ An error occurred while downloading the audio.", event.threadID, event.messageID);
       }
-    } else {
-      try {
-        const results = await Youtube.GetListByKeyword(query, false, 6);
-        if (!results.items || results.items.length === 0) {
-          return api.sendMessage("❌ No results found.", event.threadID, event.messageID);
-        }
 
-        const link = [];
-        let msg = "🔍 Search Results:\n";
-        results.items.forEach((video, index) => {
-          link.push(video.id);
-          msg += `${index + 1}. ${video.title} (${video.length.simpleText})\n\n`;
-        });
-        msg += "➡️ Reply with the number of the video to download.";
+      const links = [];
+      let message = "🔍 Search Results:\n";
+      results.items.forEach((video, index) => {
+        links.push(video.id);
+        message += `${index + 1}. ${video.title} (${video.length.simpleText})\n\n`;
+      });
 
-        return api.sendMessage(
-          { body: msg },
-          event.threadID,
-          (error, info) =>
-            global.client.handleReply.push({
-              type: "reply",
-              name: this.config.name,
-              messageID: info.messageID,
-              author: event.senderID,
-              link,
-            }),
-          event.messageID
-        );
-      } catch (err) {
-        console.error(err);
-        return api.sendMessage("❌ An error occurred while searching.", event.threadID, event.messageID);
-      }
+      message += "➡️ Reply with the number of the song you want to download.";
+      return api.sendMessage(
+        { body: message },
+        event.threadID,
+        (error, info) =>
+          global.client.handleReply.push({
+            type: "reply",
+            name: this.config.name,
+            messageID: info.messageID,
+            author: event.senderID,
+            link: links,
+          }),
+        event.messageID
+      );
+    } catch (err) {
+      console.error(err);
+      api.sendMessage(
+        "❌ An error occurred while searching for songs.",
+        event.threadID,
+        event.messageID
+      );
     }
-  },
+  }
 };
