@@ -42,7 +42,7 @@
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.41",
         "mqtt": "latest",
-        "nayan-media-downloader": "^2.6.7",
+        "nayan-video-downloader": "^0.0.2",
         "nayan-server": "^2.4.2",
         "node-cron": "^3.0.2",
         "node-fetch": "^3.3.1",
