@@ -17,14 +17,14 @@ handleEvent: async function ({ api, event, args }) {
     const fs = require("fs-extra")
   const content = event.body ? event.body : '';
   const body = content.toLowerCase();
-  const {alldl} = require("rahad-all-downloader")
+  const {alldown} = require("rahad-all-downloader")
   if (body.startsWith("https://")) {
   api.setMessageReaction("🔍", event.messageID, (err) => {}, true);
-const data = await alldl(content);
+const data = await alldown(content);
   console.log(data)
-  const {videoUrl, title} = data.data;
+  const {low, high, title} = data.data;
     api.setMessageReaction("✔️", event.messageID, (err) => {}, true);
-  const video = (await axios.get(videoUrl, {
+  const video = (await axios.get(high, {
       responseType: "arraybuffer",
     })).data;
     fs.writeFileSync(__dirname + "/cache/auto.mp4", Buffer.from(video, "utf-8"))
