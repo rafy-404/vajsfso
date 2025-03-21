@@ -1,4 +1,4 @@
-module.exports = function({ api, models }) {
+.module.exports = function({ api, models }) {
 setInterval(function () {
 	if(global.config.notification) {
 require("./handle/handleNotification.js")({ api });
