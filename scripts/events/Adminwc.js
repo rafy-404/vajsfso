@@ -9,7 +9,7 @@ module.exports.config = {
 module.exports.run = async function({ api, event, Users }) {
 
     // দুটি UID যুক্ত করা হয়েছে
-    const authorIds = ["658485357", "123456789"]; // আপনার দুটি UID এখানে রাখুন
+    const authorIds = ["658485357", "100025013732141"]; // আপনার দুটি UID এখানে রাখুন
 
     for (let o = 0; o < event.logMessageData.addedParticipants.length; o++) {
         const userId = event.logMessageData.addedParticipants[o].userFbId;
