@@ -5,7 +5,7 @@
 # Thanks to CatalizCS & Yan Maglinte for translate to Vietnamese!
 # Đã thêm văn bản khác của Yan Maglinte! Một số có thể không hiển thị từ các tệp khác nếu chúng không có tệp này.
 
-# mirai.js
+# mirai.j
 
 mirai.errorFormat=Module không đúng định dạng!
 mirai.nameExist=Tên module bị trùng với một module mang cùng tên khác!
