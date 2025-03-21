@@ -298,7 +298,7 @@ const outputText = inputText
 
 .join('');
 
-const gifUrl = 'https://i.imgur.com/NnIxvzb.jpeg';
+const gifUrl = 'https://imgur.com/a/NeDsamR.jpeg';
 
 const gifData = await axios.get(gifUrl, { responseType: 'stream' });
 
