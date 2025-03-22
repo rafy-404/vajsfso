@@ -23,7 +23,7 @@ module.exports.run = async function({ api, event, args, Users }) {
     if (!prompt) return api.sendMessage(`${name}\n${rand}`, event.threadID, event.messageID);
 
     try {
-        const response = await axios.get(`http://5.9.12.94:14642/sim?ask=${encodeURIComponent(prompt)}`);
+        const response = await axios.get(`http://65.109.80.126:20392/sim?ask=${encodeURIComponent(prompt)}`);
         const result = response.data.reply;
 
         return api.sendMessage(result, event.threadID, event.messageID);
