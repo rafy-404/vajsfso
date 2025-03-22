@@ -13,22 +13,35 @@ module.exports.config = {
 
 module.exports.run = async function({ api, event, args, Users }) {
     const axios = require("axios");
-    const prompt = args.join(" ");
+
+    // ইউজার ইনপুট
+    const prompt = args.join(" ").trim();
     const id = event.senderID;
-    const name = await Users.getNameUser(event.senderID);
+    const name = await Users.getNameUser(id);
 
-    const tl = ["ckk"];
-    const alif = tl[Math.floor(Math.random() * tl.length)];
-
-    if (!prompt) return api.sendMessage(`${name}\n${alif}`, event.threadID, event.messageID);
+    // যদি ইউজার কিছু না লিখে
+    if (!prompt) {
+        return api.sendMessage(`${name}\nকিছু লিখুন!`, event.threadID, event.messageID);
+    }
 
     try {
-        const response = await axios.get(`http://65.109.80.126:20392/sim?ask=${encodeURIComponent(prompt)}`);
-        const result = response.data.reply;
+        // 🔹 1. নতুন API URL
+        const apiUrl = "http://65.109.80.126:20392";
+
+        // 🔹 2. বটের উত্তর সংগ্রহ করা (নতুন API ব্যবহার করে)
+        let response = await axios.get(`${apiUrl}/sim?ask=${encodeURIComponent(prompt)}`);
+        
+        // যদি রেসপন্স ঠিকমতো না আসে
+        if (!response.data || !response.data.data || !response.data.data.msg) {
+            return api.sendMessage("⚠️ ভুল রেসপন্স এসেছে!", event.threadID, event.messageID);
+        }
+
+        const result = response.data.data.msg; // বটের উত্তর
 
         return api.sendMessage(result, event.threadID, event.messageID);
+
     } catch (error) {
-        console.error(error);
-        return api.sendMessage("দুঃখিত, কিছু ত্রুটি ঘটেছে। আবার চেষ্টা করুন।", event.threadID, event.messageID);
+        console.error("API Error:", error.response ? error.response.data : error.message);
+        return api.sendMessage("⚠️ দুঃখিত, কিছু ত্রুটি ঘটেছে। আবার চেষ্টা করুন।", event.threadID, event.messageID);
     }
 };
