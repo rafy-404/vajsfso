@@ -13,46 +13,56 @@ module.exports.config = {
 
 module.exports.run = async function({ api, event, args, Users }) {
     const axios = require("axios");
-    const prompt = args.join(" ");
+    
+    // ইউজার ইনপুট
+    const prompt = args.join(" ").trim();
     const id = event.senderID;
     const name = await Users.getNameUser(id);
 
-    // Random fallback message
-    const tl = ["ckk"];
-    const alif = tl[Math.floor(Math.random() * tl.length)];
-
-    if (!prompt) return api.sendMessage(`${name}\n${alif}`, event.threadID, event.messageID);
+    // যদি ইউজার কিছু না লিখে
+    if (!prompt) {
+        return api.sendMessage(`${name}\nকিছু লিখুন!`, event.threadID, event.messageID);
+    }
 
     try {
-        // Fetch API URLs from external source
+        // 🔹 1. API লিংক লোড করা
         const apiData = await axios.get('https://raw.githubusercontent.com/MOHAMMAD-NAYAN/Nayan/main/api.json');
         const apiUrl = apiData.data.sim;
         const apiUrl2 = apiData.data.api2;
 
-        // Get bot response
-        const response = await axios.get(`${apiUrl}/sim?type=ask&ask=${encodeURIComponent(prompt)}`);
-        const result = response.data.data.msg;
+        // 🔹 2. বটের উত্তর সংগ্রহ করা (নতুন ফরম্যাট চেক)
+        let response = await axios.get(`${apiUrl}/sim?ask=${encodeURIComponent(prompt)}`);
+        
+        // যদি রেসপন্স ঠিকমতো না আসে
+        if (!response.data || !response.data.data || !response.data.data.msg) {
+            return api.sendMessage("⚠️ ভুল রেসপন্স এসেছে!", event.threadID, event.messageID);
+        }
 
-        // Load text styles
+        const result = response.data.data.msg; // বটের উত্তর
+
+        // 🔹 3. ইউজারের জন্য ফন্ট স্টাইল লোড করা
         const textStyles = loadTextStyles();
         const userStyle = textStyles[event.threadID]?.style || "default";
 
-        // Apply font style
+        // 🔹 4. বটের উত্তরকে নির্দিষ্ট ফন্ট স্টাইলে রূপান্তর করা
         const fontResponse = await axios.get(`${apiUrl2}/bold?text=${encodeURIComponent(result)}&type=${userStyle}`);
-        const text = fontResponse.data.data.bolded;
+        
+        // যদি ফন্ট API ব্যর্থ হয়, তাহলে সাধারণ টেক্সট পাঠাও
+        const finalText = fontResponse.data?.data?.bolded || result;
 
-        return api.sendMessage(text, event.threadID, event.messageID);
+        return api.sendMessage(finalText, event.threadID, event.messageID);
+
     } catch (error) {
-        console.error(error);
-        return api.sendMessage("দুঃখিত, কিছু ত্রুটি ঘটেছে। আবার চেষ্টা করুন।", event.threadID, event.messageID);
+        console.error("API Error:", error.response ? error.response.data : error.message);
+        return api.sendMessage("⚠️ দুঃখিত, কিছু ত্রুটি ঘটেছে। আবার চেষ্টা করুন।", event.threadID, event.messageID);
     }
 };
 
-// Dummy function for loading text styles
+// 🔹 5. ফন্ট স্টাইল লোড করার জন্য ডামি ফাংশন
 function loadTextStyles() {
     return {
         "threadID1": { style: "bold" },
         "threadID2": { style: "italic" },
-        // Add more as needed
+        // অন্য থ্রেড আইডি যুক্ত করতে পারো
     };
 }
