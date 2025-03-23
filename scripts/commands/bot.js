@@ -1,15 +1,15 @@
-module.exports.config = {
+module.exports = {
+  config: {
     name: "bot",
-    version: "6.3.9",
-    permssion: 0,
-    credits: "SK-SIDDIK-KHAN",
-    description: "auto-reply",
-    usePrefix: true,
-    prefix: "awto",
-    category: "user",
-    category: "chatbots",
+    version: "1.0.0",
+    permission: 0,
+    credits: "sk",
+    description: "talk with bot",
+    prefix: 'awto',
+    category: "talk",
+    usages: "hi",
     cooldowns: 5,
-};
+  },
 
 module.exports.run = async function({ api, event, args, Users }) {
     const axios = require("axios");
