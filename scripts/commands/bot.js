@@ -1,15 +1,15 @@
-module.exports = {
-  config: {
+module.exports.config = {
     name: "bot",
     version: "1.0.0",
-    permission: 0,
-    credits: "sk",
-    description: "talk with bot",
-    prefix: 'awto',
-    category: "talk",
-    usages: "hi",
+    hasPermssion: 0,
+    credits: "Rakib",
+    description: "better than all Sim simi",
+    usePrefix: true,
+    prefix: "awto",
+    category: "user",
+    commandCategory: "ChatBots",
     cooldowns: 5,
-  },
+};
 
 module.exports.run = async function({ api, event, args, Users }) {
     const axios = require("axios");
@@ -23,8 +23,11 @@ module.exports.run = async function({ api, event, args, Users }) {
     if (!prompt) return api.sendMessage(`${name}\n${rand}`, event.threadID, event.messageID);
 
     try {
-        const response = await axios.get(`http://65.109.80.126:20392/sim?ask=${encodeURIComponent(prompt)}`);
-        const result = response.data.reply;
+    const kl = await axios.get(`https://raw.githubusercontent.com/MOHAMMAD-NAYAN/Nayan/main/api.json`);
+      const apiUrl2 = kl.data.api;
+        const response = await axios.get(`${apiUrl}/sim?type=ask&ask=${encodeURIComponent(prompt)}`);
+      console.log(response.data);
+      const result = response.data.data.msg;
 
         return api.sendMessage(result, event.threadID, event.messageID);
     } catch (error) {
